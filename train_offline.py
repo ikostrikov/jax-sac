@@ -6,7 +6,7 @@ from absl import app, flags
 from ml_collections import config_flags
 from tensorboardX import SummaryWriter
 
-from jax_rl.agents import BCLearner
+from jax_rl.agents import BCLearner, BCMADELearner
 from jax_rl.datasets import make_env_and_dataset
 from jax_rl.evaluation import evaluate
 
@@ -49,6 +49,10 @@ def main(_):
         agent = BCLearner(FLAGS.seed,
                           env.observation_space.sample()[np.newaxis],
                           env.action_space.sample()[np.newaxis], **kwargs)
+    elif algo == 'bc_made':
+        agent = BCMADELearner(FLAGS.seed,
+                              env.observation_space.sample()[np.newaxis],
+                              env.action_space.sample()[np.newaxis], **kwargs)
     else:
         raise NotImplementedError()
 
